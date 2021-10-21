@@ -1,0 +1,51 @@
+﻿@model IEnumerable<CategoryVM>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_LayoutAdmin";
+}
+
+<h2 class="m-5">Categorys</h2>
+<hr />
+<p class="ml-5">
+    <a asp-action="create" class="btn btn-outline-info">Add Category</a>
+</p>
+<table class="table ml-5">
+    <thead>
+        <tr class="table-primary">
+            <th><label asp-for="@Model.FirstOrDefault(c => c.ID == 0).Name"></label></th>
+            <th><label asp-for="@Model.FirstOrDefault(c => c.ID == 0).CreatedAT"></label></th>
+            <th colspan="2"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model is null || Model.ToList().Count == 0)
+        {
+            <tr>
+                <td colspan="4"> There is no data here</td>
+            </tr>
+        }
+        else
+        {
+            foreach (CategoryVM c in Model)
+            {
+    <tr>
+        <td>@c.Name</td>
+        <td>@c.CreatedAT.ToString("d")</td>
+        <td>
+            <a asp-action="edit" asp-route-id="@c.ID" class="text-success"><i class="fas fa-edit"></i></a>
+        </td>
+        <td>
+            <a asp-action="delete" asp-route-id="@c.ID" class="text-danger"><i class="fas fa-trash"></i></a>
+        </td>
+    </tr>
+            }
+        }
+    </tbody>
+    <tfoot>
+        <tr class="table-info">
+            <td colspan="4"></td>
+        </tr>
+    </tfoot>
+</table>
+

@@ -1,0 +1,48 @@
+﻿@model SellsReportVM
+
+@{
+    ViewBag.Title = "title";
+    Layout = Model.asPdf ? null :  "_LayoutAdmin";
+}
+
+<div class="container">
+    @if (!Model.asPdf)
+    {
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            @*<h1 class="h3 mb-0 text-gray-800">Dashboard</h1>*@
+
+            <form asp-controller="Reports" asp-action="GetMonthlySellsReport" asp-route-asPdf="true" onsubmit="submitHandler(event)">
+                <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                    <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
+                </button>
+            </form>
+        </div>
+    } @*<a asp-controller="Reports" asp-action="GetMonthlySellsReport" asp-route-asPdf="true" type="submit" class="btn btn-lg btn-primary">view pdf</a>*@
+
+
+
+    <h1 style="font-weight: bold; color: black; padding: 10px; text-align: center">Monthly Sells Report</h1>
+    <h3 style="font-weight:bold; color:black">Date :@Model.DateTim.ToString("d")</h3>
+    <hr />
+    <p style="font-weight:bold; color:forestgreen; font-size:25px">Orders :</p>
+
+    @foreach (var order in Model.Orders)
+    {
+<p><span style="font-weight:bold; color:black">Create Date :</span> <span style=" color:blue">@order.CreatedAT</span></p> if (order.DiscountPrice.HasValue)
+{
+<p><span style="font-weight:bold; color:black">Discount Price :</span> <span style=" color:blue">@order.DiscountPrice.Value.ToString("c")</span></p> }
+<p><span style="font-weight:bold; color:black">Total Price :</span> <span style=" color:blue">@order.TotalPrice.ToString("c")</span></p>
+                <hr />}
+    <h3><span style="color: black"> Total Price Of All Orders In One Month :</span><span style="font-weight: bold;color:forestgreen"> @Model.TotalPrice.Value.ToString("c")</span></h3>
+    <h3><span style="color:black"> Sells Count In One Month : </span><span style="font-weight: bold;color:forestgreen">@Model.SellsCount</span> </h3>
+    <h3><span style="color:black"> Month Profit : </span><span style="font-weight: bold;color:forestgreen">@Model.Profit.Value.ToString("c")</span> </h3>
+
+</div>
+
+<script >
+    const submitHandler = (event) => {
+       event.preventDefault(); 
+       console.dir(event);
+        downloadFile(event.target.action)       
+       }
+</script>

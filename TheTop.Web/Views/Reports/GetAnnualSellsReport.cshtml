@@ -1,0 +1,59 @@
+﻿@model SellsReportVM
+
+@{ ViewBag.Title = "title";
+                Layout = Model.asPdf ? null : "_LayoutAdmin"; }
+
+<div class="container">
+    @if (!Model.asPdf)
+    {
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <form asp-controller="Reports" asp-action="GetAnnualSellsReport" >
+        <div class="row">
+
+            
+                <div class="form-group">
+                    <label  class="control-label"></label>
+                    <input type="date" id="searchDate"  name="searchDate" value="@Model.SearchDate.ToString("yyyy-MM-dd")" class="form-control" />
+                </div>
+
+            
+            <div class="form-group text-right col-2 mt-4">
+                <input type="submit" value="Search" class="btn btn-success" />
+            </div>
+        </div>
+    </form>
+
+    <form asp-controller="Reports" asp-action="GetAnnualSellsReport" asp-route-searchDate="@Model.SearchDate.ToString("yyyy-MM-dd")" asp-route-asPdf="true" onsubmit="submitHandler(event)">
+        <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
+        </button>
+    </form>
+</div> } 
+
+
+
+<h1 style="font-weight: bold; color: black; padding: 10px; text-align: center">Annual Sells Report</h1>
+<h3 style="font-weight:bold; color:black">Date :@Model.DateTim.ToString("d")</h3>
+    <hr />
+    <p style="font-weight:bold; color:forestgreen; font-size:25px">Orders :</p>
+
+    @foreach (var order in Model.Orders)
+    {
+<p><span style="font-weight:bold; color:black">Create Date :</span> <span style=" color:blue">@order.CreatedAT</span></p> if (order.DiscountPrice.HasValue)
+{
+<p><span style="font-weight:bold; color:black">Discount Price :</span> <span style=" color:blue">@order.DiscountPrice.Value.ToString("c")</span></p> }
+<p><span style="font-weight:bold; color:black">Total Price :</span> <span style=" color:blue">@order.TotalPrice.ToString("c")</span></p>
+                <hr />}
+    <h4><span style=" color: black"> Total Price Of All Orders In One Month :</span><span style="font-weight: bold;color:forestgreen"> @Model.TotalPrice.Value.ToString("c")</span></h4>
+    <h4><span style="color:black"> Sells Count In One Month : </span><span style="font-weight: bold;color:forestgreen">@Model.SellsCount</span> </h4>
+    <h4><span style="color:black"> Month Profit : </span><span style="font-weight: bold;color:forestgreen">@Model.Profit.Value.ToString("c")</span> </h4>
+
+</div>
+
+<script>const submitHandler = (event) => {
+ 
+    event.preventDefault();
+    var searchDtae = document.getElementById('searchDate').value;
+    downloadFile(event.target.action)
+     
+       }</script>

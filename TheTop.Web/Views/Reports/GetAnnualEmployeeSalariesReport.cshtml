@@ -1,0 +1,87 @@
+﻿@model AnnualEmployeeSalariesReportVM
+
+@{ ViewBag.Title = "title";
+    Layout = Model.asPdf ? null : "_LayoutAdmin"; }
+
+<div class="container">
+    @if (!Model.asPdf)
+    {
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    @*<h1 class="h3 mb-0 text-gray-800">Dashboard</h1>*@
+
+    <form asp-controller="Reports" asp-action="GetAnnualEmployeeSalariesReport" asp-route-asPdf="true" onsubmit="submitHandler(event)">
+        <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
+        </button>
+    </form>
+</div>}
+    <h1 style="font-weight: bold; color: black; padding: 10px; text-align: center">Annual Employee Salaries Report</h1>
+    <h2>Year : @Model.DateTim.Year</h2>
+    <hr />
+
+    @foreach (var monthlyreport in Model.MonthlyEmployeesSalariesReporrtsVM)
+    {
+        if (monthlyreport.TotalSalaries != 0)
+        {
+
+<div class="">
+    <p><span style="color: black; font-weight: bold; font-weight: bold; font-size: 20px">Month : </span><span style="color: forestgreen;font-size: 20px">@monthlyreport.Month</span></p>
+    <p><span style="color: black;font-weight:bold; font-size: 20px">TotalSalaries : </span> <span style="color: forestgreen;font-size: 20px">@monthlyreport.TotalSalaries.ToString("c")</span></p>
+    <p><span style="color: black; font-weight: bold; font-size: 20px">Total Working Hours : </span><span style="color: forestgreen;font-size: 20px">@monthlyreport.TotalWorkingHours</span></p>
+</div>
+
+                    <table class="table">
+                        <thead>
+                            <tr class="table-primary">
+                                <th><label>First Name</label></th>
+                                <th  class="ml-5"><label>Last Name</label></th>
+                                <th class="ml-5"><label>Salary</label></th>
+                                <th class="ml-5"><label>Should Salary</label></th>
+                                <th class="ml-5"><label>Should Working Hours</label></th>
+                                <th class="ml-5"><label>Working Hourss</label></th>
+                                <th class="ml-5"><label>Hour Salary</label></th>
+                                <th><label>Email</label></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var employee in monthlyreport.Employees)
+                            {
+                            <tr>
+                                <td>@employee.FirstName</td>
+                                <td>@employee.LastName</td>
+                                <td>@employee.Salary.ToString("c")</td>
+                                <td>@employee.ShouldSalary.ToString("c")</td>
+                                <td>@employee.ShouldWorkingHours</td>
+                                <td>@employee.WorkingHours</td>
+                                <td>@employee.HourSalary.ToString("c")</td>
+                                <td>@employee.Email</td>
+                            </tr>
+}
+
+                        </tbody>
+                        <tfoot>
+                            <tr class="table-info">
+                                <td colspan="8"></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                                        
+              <hr />}
+
+                                                    }
+
+<div>
+    <h3><span style="color:black">Total Salaries : </span> <span style="color:forestgreen">@Model.TotalSalaries.ToString("c")</span></h3>
+    <h3><span style="color:black">Total Working Hours : </span><span style="color:forestgreen">@Model.TotalWorkingHours</span></h3>
+    <hr />
+</div>
+
+</div>
+
+<script>
+    const submitHandler = (event) => {
+        event.preventDefault();
+        console.dir(event);
+        downloadFile(event.target.action)
+    }
+</script>

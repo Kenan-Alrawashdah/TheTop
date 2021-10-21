@@ -1,0 +1,117 @@
+﻿@model HomeCustomerVM
+
+@{
+    Layout = "_LayoutCustomer";
+}
+
+<div class="row">
+    <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+            <div class="card-body ">
+                <div class="row">
+                    <div class="col-5 col-md-4">
+                        <div class="icon-big text-center icon-warning">
+                            <i class="bi bi-archive text-primary"></i>
+                        </div>
+                    </div>
+                    <div class="col-7 col-md-8">
+                        <div class="numbers">
+                            <p class="card-category">Count Products</p>
+                            <p class="card-title">@Model.CountAdvertisements<p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer ">
+                <hr>
+                <div class="stats">
+                    
+                    @*Update Now*@
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+            <div class="card-body ">
+                <div class="row">
+                    <div class="col-5 col-md-4">
+                        <div class="icon-big text-center icon-warning">
+                            <i class="bi bi-currency-dollar text-success"></i>
+                        </div>
+                    </div>
+                    <div class="col-7 col-md-8">
+                        <div class="numbers">
+                            <p class="card-category">Sales Price</p>
+                            <p class="card-title">@Model.SalesPrice<p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer ">
+                <hr>
+                <div class="stats">
+                   
+                    @*Last day*@
+                </div>
+            </div>
+        </div>
+    </div>
+   
+</div>
+<section id="portfolio" class="portfolio">
+    <p class="ml-5">
+        <a asp-action="create" class="btn btn-primary">Create Advertisement</a>
+    </p>
+    <hr />
+    <div class="container" data-aos="fade-up">
+
+
+
+        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
+            @foreach (var i in Model.Advertisements)
+            {
+
+<div class="col-lg-4 col-md-6 portfolio-item">
+    <img src="@i.PhotosNames.First()"  height="300" width="350" class="" alt="">
+    <div class="portfolio-info">
+        <div class="d-flex justify-content-between">
+            <span class="mb-1 text-white">@i.Category</span>
+            <span class="mb-1 text-white">@i.CreatedAT.ToString("d")</span>
+        </div>
+        <p class="font-weight-bold" style="font-size:20px">@i.Name</p>
+        <div class="justify-content-between">
+
+            <div class="d-flex justify-content-between">
+                <div>
+                    <p style="font-size:20px">@i.Price.ToString("c")</p>
+                </div>
+                <div class=" w-50 d-flex justify-content-around">
+                    <a href="@i.PhotosNames.First()" data-gallery="portfolioGallery" class="portfolio-lightbox" title="FullScreen">
+                        <i class="bi bi-arrows-fullscreen m-1 text-white" style="font-size:16px"></i>
+                    </a>
+
+                    <a asp-controller="Advertisements" asp-action="Edit" asp-route-id="@i.ID" class="">
+                        <span class="iconify text-white" data-icon="dashicons:update-alt" style="font-size:20px"></span>
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@i.ID" class="">
+                        <span class="iconify text-danger" data-icon="fluent:delete-24-filled" style="font-size:20px"></span>
+                    </a>
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+
+
+    </div>
+</div>            }
+
+        </div>
+
+    </div>
+</section>
+

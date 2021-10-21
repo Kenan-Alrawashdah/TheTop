@@ -1,0 +1,55 @@
+﻿@model EmployeeSalaryVM
+
+@{ ViewBag.Title = "title";
+    Layout = Model.asPdf ? null : "_LayoutAdmin"; }
+
+<div class="container" >
+    @if (!Model.asPdf)
+    {
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <form asp-controller="Reports" asp-action="GetMonthlySalarySlip" method="post">
+        <div class="row">
+
+
+            <div class="form-group">
+                <label class="control-label"></label>
+                <input type="date" name="datet" value="yyyy-mm-dd" class="form-control" />
+            </div>
+
+
+            <div class="form-group text-right col-2 mt-4">
+                <input type="submit" value="Search" class="btn btn-success" />
+            </div>
+        </div>
+    </form>
+
+    <form asp-controller="Reports" asp-action="GetMonthlySalarySlip" asp-route-asPdf="true" onsubmit="submitHandler(event)">
+        <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
+        </button>
+    </form>
+</div>      }
+
+    <h1 style="font-weight: bold; color: black; padding: 10px; text-align: center">Monthly Salary Slip</h1>
+    <h3 style="font-weight:bold; color:black">Date : @Model.DateTim.ToString("d")</h3>
+    <hr />
+    <div ">
+        <p><span style="font-weight:bold; color:black">First Name :</span> <span style=" color:blue">@Model.FirstName</span></p>
+        <p><span style="font-weight:bold; color:black">Last Name :</span> <span style=" color:blue">@Model.LastName</span></p>
+        <p><span style="font-weight:bold; color:black">Email :</span> <span style=" color:blue">@Model.Email</span></p>
+        <p><span style="font-weight:bold; color:black">Should Salary :</span> <span style=" color:blue">@Model.ShouldSalary.ToString("c")</span></p>
+        <p><span style="font-weight:bold; color:black">Salary :</span> <span style=" color:blue">@Model.Salary.ToString("c")</span></p>
+        <p><span style="font-weight:bold; color:black">Should Working Hours :</span> <span style=" color:blue">@Model.ShouldWorkingHours</span></p>
+        <p><span style="font-weight:bold; color:black">Working Hours :</span> <span style=" color:blue">@Model.WorkingHours</span></p>
+        <p><span style="font-weight:bold; color:black">Hour Salary :</span> <span style=" color:blue">@Model.HourSalary.ToString("c")</span></p>
+        <hr />
+    </div>
+</div>
+
+<script>
+    const submitHandler = (event) => {
+        event.preventDefault();
+        console.dir(event);
+        downloadFile(event.target.action)
+    }
+</script>
