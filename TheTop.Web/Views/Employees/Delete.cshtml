@@ -7,7 +7,7 @@
     <p>Are you sure to delete this Employee <span class="text-danger">|"@Model.FirstName @Model.LastName" | (@Model.Email)</span> ?</p>
 
     <div>
-        <a asp-controller="Coupons" asp-action="DeleteCoupon" asp-route-id="@Model.ID" class="btn btn-danger">Delete</a>
+        <a  asp-action="DeleteEmployee" asp-route-empId="@Model.ID" class="btn btn-danger">Delete</a>
         <a asp-action="Index" class="btn btn-secondary">Cancel</a>
     </div>
 </div>

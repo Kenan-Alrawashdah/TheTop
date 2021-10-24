@@ -57,6 +57,17 @@ namespace TheTop.Application.Services
 
             _appDbContext.SaveChanges();
         }
+        public void UpdateTaskProgramer(TaskDTO taskTdo)
+        {
+            var task = _appDbContext.TaskEntities.Find(taskTdo.ID);
+
+            task.Status = taskTdo.Status == StatusType.Done.ToString() ?
+                    StatusType.Done :
+                    taskTdo.Status == StatusType.InProgress.ToString() ?
+                    StatusType.InProgress : StatusType.Todo;
+
+            _appDbContext.SaveChanges();
+        }
         public void RemoveTask(int taskId)
         {
             _appDbContext.Remove(new TaskEntity { TaskEntityId = taskId });

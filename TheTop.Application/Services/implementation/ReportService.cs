@@ -171,14 +171,14 @@ namespace TheTop.Application.Services
                 .Include(user => user.Works)
                 .Include(user => user.Contract)
                 .Single();
-
+            var works = user.Works.Where(work => work.StartDate >= startOfMonth && work.StartDate <= endOfMonth).ToList();
             // exists in user table 
             int shouldWorkingHours = user.Contract.MonthlyWorkingHours;
             decimal hourSalary = user.Contract.HourSalary;
             decimal shouldSalary = (decimal) shouldWorkingHours * hourSalary;
 
             // must be calculated
-            int workingHours = user.Works.Sum(work => ((TimeSpan) (work.EndDate - work.StartDate)).Hours);
+            int workingHours = works.Sum(work => ((TimeSpan) (work.EndDate - work.StartDate)).Hours);
             decimal salary = (decimal) workingHours * hourSalary;
 
             return new EmployeeSalaryDTO()

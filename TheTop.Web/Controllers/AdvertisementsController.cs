@@ -85,7 +85,7 @@ namespace TheTop.Controllers
             {
                 Advertisements = advertisementsVMList,
                 CountAdvertisements = _advertisementService.CountAdvertisemenstUser(user.Id),
-                SalesPrice = _orderService.SalesPriceUser(user.Id),
+                
             };
             return View(homeCustomer);
         } //
@@ -203,7 +203,10 @@ namespace TheTop.Controllers
             ViewBag.Coupon = couponVM;
 
             var user = await _userManager.GetUserAsync(User);
-            ViewBag.numItemCart = _shoppingCartService.GetNumItemShoppingCart(user.Id);
+            if (user != null)
+            {
+                ViewBag.numItemCart = _shoppingCartService.GetNumItemShoppingCart(user.Id);
+            }
 
             List<CategoryDTO> categoryDtoList = _categoryService.GetAllCategories().ToList();
             List<CategoryVM> categoryVMList = categoryDtoList.Select(nameCateg => new CategoryVM

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TheTop.ViewModels
 {
-    public class HomeDTO
+    public class HomeVM
     {
         [Display(Name = "Logo")]
         public string Logo { get; set; }

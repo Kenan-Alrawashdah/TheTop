@@ -81,5 +81,33 @@ namespace TheTop.Controllers
             };
             return View(customerVM);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(CustomerVM customerVM)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("profile", customerVM);
+            }
+
+            var customer = await _userManager.FindByIdAsync(customerVM.ID);
+            customer.FirstName = customerVM.FirstName;
+            customer.LastName = customerVM.LastName;
+            customer.BirthDate = customerVM.BirthDate;
+            customer.Email = customerVM.Email;
+            customer.Country = customerVM.Country;
+            customer.City = customerVM.City;
+            customer.UserName = customerVM.Username;
+            customer.PhoneNumber = customerVM.Phone;
+            var result = await _userManager.UpdateAsync(customer);
+
+            if (result.Succeeded)
+            {
+                return RedirectToAction("profile");
+            }
+            customerVM.Erorr = "username or email is used already";
+            return View("profile", customerVM);
+        }
     }
 }

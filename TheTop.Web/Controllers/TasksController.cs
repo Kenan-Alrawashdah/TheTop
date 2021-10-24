@@ -209,15 +209,9 @@ namespace TheTop.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditProgrammer(TaskVM taskVM)
         {
-            _taskService.UpdateTask(new TaskDTO
+            _taskService.UpdateTaskProgramer(new TaskDTO
             {
                 ID = taskVM.ID,
-                Title = taskVM.Title,
-                Description = taskVM.Description,
-                ApplicationUserId = taskVM.EmployeeId,
-                Duration = taskVM.Duration,
-                DueDate = taskVM.DueDate,
-                Priority = taskVM.Priority.ToString(),
                 Status = taskVM.Status.ToString(),
             });
             return RedirectToAction(nameof(GetTasksProgrammer));

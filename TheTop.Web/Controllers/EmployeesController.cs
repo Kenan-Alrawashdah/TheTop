@@ -263,6 +263,14 @@ namespace TheTop.Controllers
             return View(employee);
         }
 
+        public async Task<ActionResult> DeleteEmployee(string empId)
+        {
+            var emp = await _userManager.FindByIdAsync(empId);
+            var result = await _userManager.DeleteAsync(emp);
+
+            return RedirectToAction("GetAllEmp");
+        }
+
         [Authorize]
         public async Task<ActionResult> StartWork()
         {

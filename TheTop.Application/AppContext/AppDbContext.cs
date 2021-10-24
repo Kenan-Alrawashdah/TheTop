@@ -14,6 +14,18 @@ namespace TheTop.Application.Dao
         
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder
+           .Entity<TaskEntity>()
+           .HasOne(e => e.ApplicationUser)
+           .WithMany(e => e.TaskEntities)
+           .OnDelete(DeleteBehavior.Cascade);
+
+            builder
+          .Entity<Work>()
+          .HasOne(e => e.ApplicationUser)
+          .WithMany(e => e.Works)
+          .OnDelete(DeleteBehavior.Cascade);
+
             builder.Seed();
             base.OnModelCreating(builder);
         }

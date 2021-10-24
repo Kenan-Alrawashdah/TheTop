@@ -126,7 +126,7 @@ namespace TheTop.Controllers
 
 
             // Object Home
-            HomeDTO model = new HomeDTO
+            HomeVM model = new HomeVM
             {
                 AdvertisementsList = advertisementsVMList,
                 ReviewsList = reviewVMlist,

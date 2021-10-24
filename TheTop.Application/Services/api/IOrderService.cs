@@ -13,6 +13,6 @@ namespace TheTop.Application.Services
         ICollection<OrderDTO> SearchOrder(SearchDTO searchDto);
         decimal SalesPrice();
         decimal Profitable();
-        decimal SalesPriceUser(string userId);
+       
     }
 }

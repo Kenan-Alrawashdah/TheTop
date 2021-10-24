@@ -29,7 +29,6 @@ namespace TheTop.Application.Services
                 ApplicationUserId = userId,
                 Advertisements = user.ShoppingCart.Advertisements,
                 TotalPrice = totalPrice,
-                Status = StatusOrderType.Cancel,
             };
             _appDbContext.Add(order);
             _appDbContext.SaveChanges();
@@ -172,11 +171,7 @@ namespace TheTop.Application.Services
             return SalesPrice() * (decimal)0.05;
         }
 
-        public decimal SalesPriceUser( string userId)
-        {
-            var price = _appDbContext.Orders.Sum(order => order.ApplicationUserId == userId ? order.TotalPrice:0);
 
-            return (decimal)price;
-        }
+       
     }
 }

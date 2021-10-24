@@ -8,8 +8,8 @@ namespace TheTop.ViewModels
 {
     public class CustomerVM : User
     {
-       
 
-        
+        public string  Erorr { get; set; }
+
     }
 }

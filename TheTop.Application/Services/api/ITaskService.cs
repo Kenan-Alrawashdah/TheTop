@@ -7,6 +7,7 @@ namespace TheTop.Application.Services
     {
         void CreateNewTask(TaskDTO taskTdo);
         void UpdateTask(TaskDTO taskTdo);
+        void UpdateTaskProgramer(TaskDTO taskTdo);
         void RemoveTask(int taskId);
         TaskDTO GetTaskById(int taskId);
         IEnumerable<TaskDTO> GetEmployeeTasks(string employeeId);

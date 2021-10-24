@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TheTop.Application.Dao;
 
 namespace TheTop.Application.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211024012049_v3")]
+    partial class v3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,28 +81,28 @@ namespace TheTop.Application.Migrations
                         new
                         {
                             Id = "admin-role-id",
-                            ConcurrencyStamp = "21ad13de-f83b-42f2-901a-d0d988852e9f",
+                            ConcurrencyStamp = "41990b45-627c-4ea3-a6fa-dfc41ffc8313",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "customer-role-id",
-                            ConcurrencyStamp = "b3398767-28f1-4cfe-b31f-3197f9bdcdd2",
+                            ConcurrencyStamp = "732bd4e3-7624-4955-a383-977e45c53c0f",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
                             Id = "Programmer-role-id",
-                            ConcurrencyStamp = "f32d4cad-d7fd-4585-abd1-85e3fbe50378",
+                            ConcurrencyStamp = "403ef62e-7bbf-4cb6-b0d2-ed1cb06944d2",
                             Name = "Programmer",
                             NormalizedName = "PROGRAMMER"
                         },
                         new
                         {
                             Id = "accountant-role-id",
-                            ConcurrencyStamp = "ca9f552d-44d8-43a2-a78a-4a342d342d84",
+                            ConcurrencyStamp = "cb07f423-64ca-450e-87ea-ad93afad812e",
                             Name = "Accountant",
                             NormalizedName = "ACCOUNTANT"
                         });
@@ -354,13 +356,13 @@ namespace TheTop.Application.Migrations
                             Id = "administrator-user-id",
                             AccessFailedCount = 0,
                             BirthDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "6c056389-4ac0-430d-b5e3-c2f3311e9986",
+                            ConcurrencyStamp = "617b5f1d-3350-4b40-8c8e-71ac7f798076",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEP6yRE8M+87eWA28hh5SDL139+GDSzeg2kqcZZNyl8EzOJ1Y/RH1lJucKxoiXpZ40w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHbm9pW9vNaezaQoKyHVh7scw0tYhCv8pYMISwzHUUv+Srp9mh5sTI+/PWVCcP53xQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7400978b-5d00-4aec-b2a7-d6288a397cfe",
+                            SecurityStamp = "48ad0a83-287e-454c-ab89-c7ac11221244",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
@@ -887,8 +889,7 @@ namespace TheTop.Application.Migrations
                 {
                     b.HasOne("TheTop.Application.Entities.ApplicationUser", "ApplicationUser")
                         .WithMany("Works")
-                        .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ApplicationUserId");
 
                     b.Navigation("ApplicationUser");
                 });

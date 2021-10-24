@@ -9,6 +9,6 @@ namespace TheTop.ViewModels
     {
         public ICollection<AdvertisementVM> Advertisements { get; set; }
         public int CountAdvertisements { get; set; }
-        public decimal SalesPrice { get; set; }
+       
     }
 }
