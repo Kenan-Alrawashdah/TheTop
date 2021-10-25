@@ -142,7 +142,7 @@ namespace TheTop.Application.Services
             if (searchDto.Name != null)
             {
                 advertisementList = advertisementList
-                    .Where(a => a.Name.Contains(searchDto.Name))
+                    .Where(a => a.Name.ToLower().Contains(searchDto.Name.ToLower()))
                     .ToList();
             }
 
