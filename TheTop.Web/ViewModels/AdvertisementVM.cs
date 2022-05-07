@@ -31,7 +31,11 @@ namespace TheTop.ViewModels
 
         [Display(Name = "Photos")]
         public ICollection<IFormFile> PhotosFiles { get; set; }
+
+
+        public ICollection<IFormFile> EditPhotosFiles { get; set; }
         public ICollection<string> PhotosNames{ get; set; }
 
+        public string Error { get; set; }
     }
 }

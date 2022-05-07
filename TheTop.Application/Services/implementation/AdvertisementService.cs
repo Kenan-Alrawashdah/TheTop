@@ -46,11 +46,11 @@ namespace TheTop.Application.Services
            
             if(advertisementsDto.ImagesNames.ToList().Count > 0) {
                 advertisementModel.Images.Clear();
-            }
             advertisementModel.Images = advertisementsDto.ImagesNames.Select(imgName => new Image
             {
                 Name = imgName
             }).ToList();
+            }
 
             _appDbContext.Update(advertisementModel);
             _appDbContext.SaveChanges();

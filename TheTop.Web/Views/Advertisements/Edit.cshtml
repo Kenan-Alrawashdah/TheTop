@@ -33,7 +33,6 @@ Layout = "_LayoutCustomer";
             <div class="mb-2">
                 <label asp-for="PhotosFiles"></label>
                 <input asp-for="PhotosFiles" class="col-12 form-control" type="file" multiple style="" />
-                <span asp-validation-for="PhotosFiles" class="text-danger"></span>
                 <br />
                 <img src="@Model.PhotosNames.First()" width="360" height="200"  />
             </div>

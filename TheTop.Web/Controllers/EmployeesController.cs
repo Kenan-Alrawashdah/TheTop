@@ -329,6 +329,10 @@ namespace TheTop.Controllers
             var homeAdmin = new HomeAdminVM();
             homeAdmin.Orders = orderVMList;
             homeAdmin.Search = modelVM;
+            homeAdmin.CountAdvertisements = _advertisementService.CountAdvertisemenst();
+            homeAdmin.CountReviews = _reviewService.CountReview();
+            homeAdmin.SalesPrice = _orderService.SalesPrice();
+            homeAdmin.Profitable = _orderService.Profitable();
             return View("index", homeAdmin);
         }
 

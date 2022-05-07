@@ -240,22 +240,20 @@ namespace TheTop.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(AdvertisementVM viewModel)
         {
-            var user = await _userManager.GetUserAsync(User);
-
-            AdvertisementDTO modelDto = new AdvertisementDTO()
+            if (ModelState.IsValid && !(viewModel.PhotosFiles is null))
             {
-                Name = viewModel.Name,
-                Price = viewModel.Price,
-                CategoryId = viewModel.CategoryId,
-                UserId = user.Id
-            };
+                var user = await _userManager.GetUserAsync(User);
 
-            if (ModelState.IsValid)
-            {
+                AdvertisementDTO modelDto = new AdvertisementDTO()
+                {
+                    Name = viewModel.Name,
+                    Price = viewModel.Price,
+                    CategoryId = viewModel.CategoryId,
+                    UserId = user.Id
+                };
                 var imagesNames = new List<string>();
 
-                if (viewModel.PhotosFiles.Count > 0)
-                {
+               
                     foreach (var photo in viewModel.PhotosFiles)
                     {
                         var fullPath = $"{_wepHostEnvironment.WebRootPath}\\Images\\{Path.GetFileName(photo.FileName)}";
@@ -266,16 +264,27 @@ namespace TheTop.Controllers
 
                         imagesNames.Add($"/images/{Path.GetFileName(photo.FileName)}");
                     }
-                }
 
-                modelDto.ImagesNames = imagesNames;
+                    modelDto.ImagesNames = imagesNames;
 
-                _advertisementService.CreateNewAdvertisement(modelDto);
-                return RedirectToAction("GetById");
+                    _advertisementService.CreateNewAdvertisement(modelDto);
+                    return RedirectToAction("GetById");
+               
+
+               
             }
             else
             {
-                return View();
+                List<CategoryDTO> categoryList = _categoryService.GetAllCategories().ToList();
+
+                List<CategoryVM> list = categoryList.Select(category => new CategoryVM
+                {
+                    Name = category.Name,
+                    ID = category.ID
+                }).ToList();
+                viewModel.Categorys = list;
+                viewModel.Error = "The image is required";
+                return View(viewModel);
             }
         } //
 
@@ -306,21 +315,22 @@ namespace TheTop.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(AdvertisementVM viewModel)
         {
-            var user = await _userManager.GetUserAsync(User);
-            AdvertisementDTO modelDto = new AdvertisementDTO()
-            {
-                ID = viewModel.ID,
-                Name = viewModel.Name,
-                Price = viewModel.Price,
-                CategoryId = viewModel.CategoryId,
-                UserId = user.Id
-            };
+            
 
             if (ModelState.IsValid)
             {
+                var user = await _userManager.GetUserAsync(User);
+                AdvertisementDTO modelDto = new AdvertisementDTO()
+                {
+                    ID = viewModel.ID,
+                    Name = viewModel.Name,
+                    Price = viewModel.Price,
+                    CategoryId = viewModel.CategoryId,
+                    UserId = user.Id
+                };
                 var imagesNames = new List<string>();
 
-                if (viewModel.PhotosFiles.Count > 0)
+                if ( !(viewModel.PhotosFiles is null))
                 {
                     foreach (IFormFile photo in viewModel.PhotosFiles)
                     {
@@ -341,7 +351,7 @@ namespace TheTop.Controllers
             }
             else
             {
-                return View();
+                return RedirectToAction("Edit");
             }
         } //
 
